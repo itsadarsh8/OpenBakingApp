@@ -1,21 +1,24 @@
-package com.example.bakingapp.POJO_PlainOldJavaObjects;
+package com.example.bakingapp.POJO;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 public class StepsPojo implements Parcelable
 {
 
-    private String mid;
-    private String mShortDescription;
-    private String mLongDescription;
-    private String mVideoDescription;
+    private static String mid;
+    private static String mShortDescription;
+    private static String mLongDescription;
+    private static String mVideoDescription;
 
     public StepsPojo(String id, String shortDescription, String longDescription, String videoDescription) {
         mid = id;
         mShortDescription = shortDescription;
         mLongDescription = longDescription;
         mVideoDescription = videoDescription;
+
+
     }
 
     protected StepsPojo(Parcel in) {

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/rectangle_box"
+    android:padding="16dp"
+    android:orientation="vertical">
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/stepSortView"
+        android:textSize="28sp"
+        android:gravity="center"
+        android:fontFamily="monospace"
+        tools:text="Starting prep"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/stepLongView"
+        android:gravity="center"
+        android:textSize="16sp"
+        tools:text="1. Preheat the oven to 350\u00b0F. Butter a 9 \"
+        />
+
+
+
+</LinearLayout>

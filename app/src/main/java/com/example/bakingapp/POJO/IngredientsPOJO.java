@@ -1,4 +1,4 @@
-package com.example.bakingapp.POJO_PlainOldJavaObjects;
+package com.example.bakingapp.POJO;
 
 import android.os.Parcel;
 import android.os.Parcelable;

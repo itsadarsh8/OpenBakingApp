@@ -1,11 +1,10 @@
 package com.example.bakingapp.Utils;
 
-import android.os.AsyncTask;
 import android.util.Log;
 
-import com.example.bakingapp.POJO_PlainOldJavaObjects.IngredientsPOJO;
-import com.example.bakingapp.POJO_PlainOldJavaObjects.RecipePOJO;
-import com.example.bakingapp.POJO_PlainOldJavaObjects.StepsPojo;
+import com.example.bakingapp.POJO.IngredientsPOJO;
+import com.example.bakingapp.POJO.RecipePOJO;
+import com.example.bakingapp.POJO.StepsPojo;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -84,6 +83,8 @@ public class JsonUtil {
 
                 StepsPojo stepsPojo=new StepsPojo(id,shortDescription,description,videoURL);
                 stepsArrayList.add(stepsPojo);
+
+                Log.i("JsonUtil",shortDescription+description+videoURL);
 
             }
 

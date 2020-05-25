@@ -6,9 +6,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.example.bakingapp.Adapters.MainViewAdapter;
-import com.example.bakingapp.POJO_PlainOldJavaObjects.RecipePOJO;
+import com.example.bakingapp.POJO.RecipePOJO;
 import com.example.bakingapp.Utils.JsonUtil;
 import com.example.bakingapp.Utils.NetworkUtil;
 
@@ -52,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
             ArrayList<RecipePOJO> recipeArrayList= JsonUtil.fetchFeaturesFromJson(json);
             mainViewAdapter=new MainViewAdapter(MainActivity.this,recipeArrayList);
             recyclerView.setAdapter(mainViewAdapter);
+            
             super.onPostExecute(json);
         }
     }

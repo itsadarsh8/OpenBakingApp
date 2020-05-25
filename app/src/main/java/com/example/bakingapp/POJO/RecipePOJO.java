@@ -1,7 +1,8 @@
-package com.example.bakingapp.POJO_PlainOldJavaObjects;
+package com.example.bakingapp.POJO;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -19,6 +20,7 @@ public class RecipePOJO  implements Parcelable {
         mSteps = steps;
         mIngredients = ingredients;
         mServing=serving;
+
     }
 
     protected RecipePOJO(Parcel in) {

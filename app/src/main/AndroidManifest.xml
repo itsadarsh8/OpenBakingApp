@@ -12,8 +12,19 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".RecipeActivity"></activity>
-        <activity android:name=".Utils.RecipeActivity" />
+        <activity
+            android:name=".MasterStepActivity"
+            android:label="@string/title_masterfragment_list"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".MasterDetailActivity"
+            android:label="@string/title_masterfragment_detail"
+            android:parentActivityName=".MasterStepActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.bakingapp.MasterStepActivity" />
+        </activity>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

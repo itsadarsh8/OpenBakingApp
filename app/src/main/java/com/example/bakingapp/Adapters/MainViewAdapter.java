@@ -3,7 +3,7 @@ package com.example.bakingapp.Adapters;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,11 +12,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.bakingapp.POJO_PlainOldJavaObjects.RecipePOJO;
+import com.example.bakingapp.MasterStepActivity;
+import com.example.bakingapp.POJO.RecipePOJO;
 import com.example.bakingapp.R;
-import com.example.bakingapp.RecipeActivity;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 public class MainViewAdapter extends RecyclerView.Adapter<MainViewAdapter.mainViewHolder> {
@@ -45,7 +44,7 @@ public class MainViewAdapter extends RecyclerView.Adapter<MainViewAdapter.mainVi
         holder.item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(mContext, RecipeActivity.class);
+                Intent intent = new Intent(mContext, MasterStepActivity.class);
                 Bundle args = new Bundle();
                 args.putParcelable("RecipePojoObject",mRecipePOJOArrayList.get(position));
                 intent.putExtra("RecipePojoObject", args);
