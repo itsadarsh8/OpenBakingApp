@@ -10,8 +10,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.bakingapp.POJO.StepsPojo;
 import com.example.bakingapp.R;
 import com.google.android.exoplayer2.ExoPlayerFactory;
 import com.google.android.exoplayer2.SimpleExoPlayer;
@@ -20,6 +22,8 @@ import com.google.android.exoplayer2.source.ProgressiveMediaSource;
 import com.google.android.exoplayer2.ui.PlayerView;
 import com.google.android.exoplayer2.upstream.DataSource;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
+
+import java.util.ArrayList;
 
 
 public class MasterDetailFragment extends Fragment {
@@ -43,22 +47,23 @@ public class MasterDetailFragment extends Fragment {
     private int currentWindow = 0;
     private long playbackPosition = 0;
     Activity activity;
+    private ArrayList<StepsPojo> mStepList;
+    private int position;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-            mShort=getArguments().getString("shortDescription");
-            mLong=getArguments().getString("longDescription");
-            mVideo=getArguments().getString("videoDescription");
+
+        mStepList = getArguments().getParcelableArrayList("stepList");
+        position = getArguments().getInt("position");
+
+        mShort =mStepList.get(position).getShortDescription();
+        mLong =mStepList.get(position).getLongDescription();
+        mVideo =mStepList.get(position).getVideoDescription();
 
 
-            Log.i("MasterDetailFragment",mShort+mLong+mVideo);
-            // Load the dummy content specified by the fragment
-            // arguments. In a real-world scenario, use a Loader
-            // to load content from a content provider.
-           // mItem = DummyContent.ITEM_MAP.get(getArguments().getString(ARG_ITEM_ID));
-         activity=this.getActivity();
+        activity = this.getActivity();
 
     }
 
@@ -67,18 +72,40 @@ public class MasterDetailFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.masterfragment_detail, container, false);
         playerView = rootView.findViewById(R.id.video_view);
-        TextView shortView=rootView.findViewById(R.id.shortViewDetail);
-        TextView longView=rootView.findViewById(R.id.longViewDetail);
+        TextView shortView = rootView.findViewById(R.id.shortViewDetail);
+        TextView longView = rootView.findViewById(R.id.longViewDetail);
+        Button nextStep=rootView.findViewById(R.id.nextStepButton);
+         startFragment(shortView, longView);
 
-        shortView.setText(mShort);
-        longView.setText(mLong);
-        initializePlayer();
+        nextStep.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                position++;
+
+                if(position==mStepList.size()) {
+                    position=0;
+                }
+                    mShort = mStepList.get(position).getShortDescription();
+                    mLong = mStepList.get(position).getLongDescription();
+                    mVideo = mStepList.get(position).getVideoDescription();
+
+                    startFragment(shortView, longView);
+                }
+
+
+        });
 
         return rootView;
     }
 
+    private void startFragment(TextView shortView, TextView longView) {
+        shortView.setText(mShort);
+        longView.setText(mLong);
+        initializePlayer();
+    }
+
     private void initializePlayer() {
-         player = ExoPlayerFactory.newSimpleInstance(activity);
+        player = ExoPlayerFactory.newSimpleInstance(activity);
         playerView.setPlayer(player);
 
         Uri uri = Uri.parse(mVideo);
@@ -91,7 +118,7 @@ public class MasterDetailFragment extends Fragment {
 
     private MediaSource buildMediaSource(Uri uri) {
         DataSource.Factory dataSourceFactory =
-                new DefaultDataSourceFactory(activity, "exoplayer-codelab");
+                new DefaultDataSourceFactory(activity, "exoplayer");
         return new ProgressiveMediaSource.Factory(dataSourceFactory)
                 .createMediaSource(uri);
     }

@@ -1,59 +1,45 @@
 package com.example.bakingapp.Adapters;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
-
+import androidx.annotation.Nullable;
 import com.example.bakingapp.POJO.IngredientsPOJO;
 import com.example.bakingapp.R;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 
-public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.IngredientsViewHolder> {
+public class IngredientsAdapter extends ArrayAdapter<IngredientsPOJO> {
         private ArrayList<IngredientsPOJO> mIngredientsPOJOArrayList;
 
-    public IngredientsAdapter(ArrayList<IngredientsPOJO> ingredientsPOJOArrayList) {
-        mIngredientsPOJOArrayList = ingredientsPOJOArrayList;
+
+    public IngredientsAdapter(Context context,ArrayList<IngredientsPOJO> ingredientsPOJOArrayList) {
+        super(context,0,ingredientsPOJOArrayList);
+        mIngredientsPOJOArrayList=ingredientsPOJOArrayList;
     }
 
     @NonNull
     @Override
-    public IngredientsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view;
-        LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        view = layoutInflater.inflate(R.layout.ingredients_view_holder, parent, false);
-        return new IngredientsViewHolder(view);
-    }
+    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
 
-    @Override
-    public void onBindViewHolder(@NonNull IngredientsViewHolder holder, int position) {
-        holder.ingredientQuantity.setText(mIngredientsPOJOArrayList.get(position).getQuantity());
-        holder.ingredientName.setText(mIngredientsPOJOArrayList.get(position).getIngredient());
-        holder.ingredientMeasure.setText(mIngredientsPOJOArrayList.get(position).getMeasure());
-    }
-
-    @Override
-    public int getItemCount() {
-        return mIngredientsPOJOArrayList.size();
-    }
-
-    public class IngredientsViewHolder extends  RecyclerView.ViewHolder{
-            TextView ingredientName;
-            TextView ingredientMeasure;
-            TextView ingredientQuantity;
-
-        public IngredientsViewHolder(@NonNull View itemView) {
-            super(itemView);
-
-            ingredientMeasure=itemView.findViewById(R.id.ingredients_measure);
-            ingredientName=itemView.findViewById(R.id.ingredient_name);
-            ingredientQuantity=itemView.findViewById(R.id.ingredient_quantity);
+        if (convertView == null) {
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.ingredients_view_holder, parent, false);
         }
+        TextView ingredientName=convertView.findViewById(R.id.ingredient_name);
+        TextView ingredientMeasure=convertView.findViewById(R.id.ingredients_measure);
+        TextView ingredientQuantity=convertView.findViewById(R.id.ingredient_quantity);
+
+        ingredientQuantity.setText(mIngredientsPOJOArrayList.get(position).getQuantity());
+        ingredientName.setText(mIngredientsPOJOArrayList.get(position).getIngredient());
+        ingredientMeasure.setText(mIngredientsPOJOArrayList.get(position).getMeasure());
+
+        return convertView;
+
     }
+
 }

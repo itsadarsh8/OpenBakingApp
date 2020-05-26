@@ -54,9 +54,8 @@ public class MasterStepAdapter extends RecyclerView.Adapter<MasterStepAdapter.Vi
                 if (mTwoPane) {
 
                     Bundle arguments = new Bundle();
-                    arguments.putString("shortDescription", stepList.get(position).getShortDescription());
-                    arguments.putString("longDescription", stepList.get(position).getLongDescription());
-                    arguments.putString("videoDescription", stepList.get(position).getVideoDescription());
+                    arguments.putParcelableArrayList("stepList",stepList);
+                    arguments.putInt("position",position);
                     MasterDetailFragment fragment = new MasterDetailFragment();
                     fragment.setArguments(arguments);
                     mParentActivity.getSupportFragmentManager().beginTransaction()
@@ -65,10 +64,8 @@ public class MasterStepAdapter extends RecyclerView.Adapter<MasterStepAdapter.Vi
                 } else {
                     Context context = view.getContext();
                     Intent intent = new Intent(context, MasterDetailActivity.class);
-                    intent.putExtra("shortDescription", stepList.get(position).getShortDescription());
-                    intent.putExtra("longDescription", stepList.get(position).getLongDescription());
-                    intent.putExtra("videoDescription", stepList.get(position).getVideoDescription());
-                    //  intent.putExtra(MasterDetailFragment.ARG_ITEM_ID, item.id);
+                    intent.putParcelableArrayListExtra("stepList",stepList);
+                    intent.putExtra("position",position);
 
                     context.startActivity(intent);
                 }

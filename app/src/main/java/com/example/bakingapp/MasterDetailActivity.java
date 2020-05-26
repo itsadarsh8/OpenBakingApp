@@ -33,12 +33,10 @@ public class MasterDetailActivity extends AppCompatActivity {
 //            // Create the detail fragment and add it to the activity
 //            // using a fragment transaction.
             Bundle arguments = new Bundle();
-            arguments.putString("shortDescription",
-                    getIntent().getStringExtra("shortDescription"));
-        arguments.putString("longDescription",
-                getIntent().getStringExtra("longDescription"));
-        arguments.putString("videoDescription",
-                getIntent().getStringExtra("videoDescription"));
+            arguments.putParcelableArrayList("stepList",
+                    getIntent().getParcelableArrayListExtra("stepList"));
+        arguments.putInt("position",
+                getIntent().getIntExtra("position",0));
             MasterDetailFragment fragment = new MasterDetailFragment();
             fragment.setArguments(arguments);
             getSupportFragmentManager().beginTransaction()
