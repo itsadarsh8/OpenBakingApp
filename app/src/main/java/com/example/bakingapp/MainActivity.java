@@ -51,9 +51,14 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String json) {
             ArrayList<RecipePOJO> recipeArrayList= JsonUtil.fetchFeaturesFromJson(json);
+            for(int k=0;k<recipeArrayList.size();k++){
+                for(int  m=0;m<recipeArrayList.get(k).getIngredients().size();m++){
+
+                }
+            }
             mainViewAdapter=new MainViewAdapter(MainActivity.this,recipeArrayList);
             recyclerView.setAdapter(mainViewAdapter);
-            
+
             super.onPostExecute(json);
         }
     }

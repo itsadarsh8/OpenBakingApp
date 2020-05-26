@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.bakingapp.Adapters.MasterStepAdapter;
+import com.example.bakingapp.POJO.IngredientsPOJO;
 import com.example.bakingapp.POJO.RecipePOJO;
 import com.example.bakingapp.POJO.StepsPojo;
 
@@ -37,6 +38,7 @@ public class MasterStepActivity extends AppCompatActivity {
      */
     private boolean mTwoPane;
     public static ArrayList<StepsPojo> mStepsList;
+    public static ArrayList<IngredientsPOJO> mIngredientsList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,11 +57,25 @@ public class MasterStepActivity extends AppCompatActivity {
         Bundle args = intent.getBundleExtra("RecipePojoObject");
         RecipePOJO recipePOJO = args.getParcelable("RecipePojoObject");
         mStepsList=recipePOJO.getSteps();
+        mIngredientsList=recipePOJO.getIngredients();
 
 
         View recyclerView = findViewById(R.id.masterfragment_list);
         assert recyclerView != null;
         setupRecyclerView((RecyclerView) recyclerView);
+
+        TextView ingredients=findViewById(R.id.ingredients);
+        ingredients.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent =new Intent(MasterStepActivity.this,IngredientsActivity.class);
+                Bundle args = new Bundle();
+                args.putParcelable("RecipePojoObject",recipePOJO);
+                intent.putExtra("RecipePojoObject", args);
+
+                startActivity(intent);
+            }
+        });
 
     }
 

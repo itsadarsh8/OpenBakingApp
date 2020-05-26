@@ -23,6 +23,7 @@ public class JsonUtil {
             if(json!=null) {
                 try {
                     JSONArray baseArray = new JSONArray(json);
+
                     for (int i = 0; i < baseArray.length(); i++) {
                         JSONObject baseJsonObject = baseArray.getJSONObject(i);
                         JSONArray ingredientArray = baseJsonObject.getJSONArray("ingredients");
@@ -31,9 +32,10 @@ public class JsonUtil {
                         ArrayList<IngredientsPOJO> ingredients = fetchIngredientsFeatures(ingredientArray);
                         ArrayList<StepsPojo> steps = fetchStepsFeatures(stepsArray);
                         RecipePOJO recipe = fetchRecipeFeatures(baseJsonObject, ingredients, steps);
-
                         recipePOJOArrayList.add(recipe);
+
                    }
+
                 } catch (JSONException e) {
                     Log.e(LOG_ERROR,"Error fetchFeaturesFromJson -"+e);
                 }
@@ -49,6 +51,7 @@ public class JsonUtil {
     private static ArrayList<IngredientsPOJO> fetchIngredientsFeatures(JSONArray ingredientArray) {
 
             ArrayList<IngredientsPOJO> ingredientsArrayList=new ArrayList<>();
+        ingredientsArrayList.clear();
        try{
 
                 for(int j=0;j<ingredientArray.length();j++){
@@ -72,6 +75,7 @@ public class JsonUtil {
 
     private static ArrayList<StepsPojo> fetchStepsFeatures(JSONArray stepsArray) {
         ArrayList<StepsPojo> stepsArrayList=new ArrayList<>();
+
         try{
 
             for(int j=0;j<stepsArray.length();j++){
@@ -84,14 +88,14 @@ public class JsonUtil {
                 StepsPojo stepsPojo=new StepsPojo(id,shortDescription,description,videoURL);
                 stepsArrayList.add(stepsPojo);
 
-                Log.i("JsonUtil",shortDescription+description+videoURL);
-
             }
+            return stepsArrayList;
 
         } catch (JSONException e) {
             Log.e(LOG_ERROR,"Error fetchStepsFeatures -"+e);
         }
-        return stepsArrayList;
+        return null;
+
     }
 
     private static RecipePOJO fetchRecipeFeatures(JSONObject jsonObject, ArrayList<IngredientsPOJO> ingredients, ArrayList<StepsPojo> steps) {

@@ -7,10 +7,10 @@ import android.util.Log;
 public class StepsPojo implements Parcelable
 {
 
-    private static String mid;
-    private static String mShortDescription;
-    private static String mLongDescription;
-    private static String mVideoDescription;
+    private  String mid;
+    private  String mShortDescription;
+    private  String mLongDescription;
+    private  String mVideoDescription;
 
     public StepsPojo(String id, String shortDescription, String longDescription, String videoDescription) {
         mid = id;

@@ -13,7 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bakingapp.MasterDetailActivity;
-import com.example.bakingapp.MasterDetailFragment;
+import com.example.bakingapp.Fragment.MasterDetailFragment;
 import com.example.bakingapp.MasterStepActivity;
 import com.example.bakingapp.POJO.StepsPojo;
 import com.example.bakingapp.R;
@@ -50,28 +50,28 @@ public class MasterStepAdapter extends RecyclerView.Adapter<MasterStepAdapter.Vi
             @Override
             public void onClick(View view) {
                 Log.i("MasterStepAdapter",String.valueOf(stepList.size()));
-                //    DummyContent.DummyItem item = (DummyContent.DummyItem) view.getTag();
-//                if (mTwoPane) {
-//
-//                    Bundle arguments = new Bundle();
-//                    arguments.putString("shortDescription", stepList.get(position).getShortDescription());
-//                    arguments.putString("longDescription", stepList.get(position).getLongDescription());
-//                    arguments.putString("videoDescription", stepList.get(position).getVideoDescription());
-//                    MasterDetailFragment fragment = new MasterDetailFragment();
-//                    fragment.setArguments(arguments);
-//                    mParentActivity.getSupportFragmentManager().beginTransaction()
-//                            .replace(R.id.masterfragment_detail_container, fragment)
-//                            .commit();
-//                } else {
-//                    Context context = view.getContext();
-//                    Intent intent = new Intent(context, MasterDetailActivity.class);
-//                    intent.putExtra("shortDescription", stepList.get(position).getShortDescription());
-//                    intent.putExtra("longDescription", stepList.get(position).getLongDescription());
-//                    intent.putExtra("videoDescription", stepList.get(position).getVideoDescription());
-//                    //  intent.putExtra(MasterDetailFragment.ARG_ITEM_ID, item.id);
-//
-//                    context.startActivity(intent);
-//                }
+               //     DummyContent.DummyItem item = (DummyContent.DummyItem) view.getTag();
+                if (mTwoPane) {
+
+                    Bundle arguments = new Bundle();
+                    arguments.putString("shortDescription", stepList.get(position).getShortDescription());
+                    arguments.putString("longDescription", stepList.get(position).getLongDescription());
+                    arguments.putString("videoDescription", stepList.get(position).getVideoDescription());
+                    MasterDetailFragment fragment = new MasterDetailFragment();
+                    fragment.setArguments(arguments);
+                    mParentActivity.getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.masterfragment_detail_container, fragment)
+                            .commit();
+                } else {
+                    Context context = view.getContext();
+                    Intent intent = new Intent(context, MasterDetailActivity.class);
+                    intent.putExtra("shortDescription", stepList.get(position).getShortDescription());
+                    intent.putExtra("longDescription", stepList.get(position).getLongDescription());
+                    intent.putExtra("videoDescription", stepList.get(position).getVideoDescription());
+                    //  intent.putExtra(MasterDetailFragment.ARG_ITEM_ID, item.id);
+
+                    context.startActivity(intent);
+                }
             }
         });
 

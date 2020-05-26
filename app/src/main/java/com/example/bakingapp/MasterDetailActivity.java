@@ -4,6 +4,8 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.bakingapp.Fragment.MasterDetailFragment;
+
 /**
  * An activity representing a single MasterFragment detail screen. This
  * activity is only used on narrow width devices. On tablet-size devices,
