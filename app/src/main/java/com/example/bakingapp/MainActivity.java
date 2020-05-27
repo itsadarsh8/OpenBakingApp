@@ -1,8 +1,12 @@
 package com.example.bakingapp;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.test.espresso.IdlingResource;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -12,6 +16,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.example.bakingapp.Adapters.MainViewAdapter;
+import com.example.bakingapp.IdlingResource.MyIdlingResource;
 import com.example.bakingapp.POJO.RecipePOJO;
 import com.example.bakingapp.Utils.JsonUtil;
 import com.example.bakingapp.Utils.NetworkUtil;
@@ -28,6 +33,18 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     MainViewAdapter mainViewAdapter;
     IAmAsyncTask mainViewAsyncTask;
+
+    @Nullable
+    private static MyIdlingResource mIdlingResource=new MyIdlingResource();
+
+    @VisibleForTesting
+    @NonNull
+    public static IdlingResource getIdlingResource() {
+        if (mIdlingResource == null) {
+            mIdlingResource = new MyIdlingResource();
+        }
+        return mIdlingResource;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +87,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public class IAmAsyncTask extends AsyncTask<String, Void, String> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            mIdlingResource.setIdleState(false);
+        }
 
         @Override
         protected String doInBackground(String... urls) {
@@ -89,6 +111,8 @@ public class MainActivity extends AppCompatActivity {
             recyclerView.setAdapter(mainViewAdapter);
 
             super.onPostExecute(json);
+            mIdlingResource.setIdleState(true);
+
         }
     }
 
