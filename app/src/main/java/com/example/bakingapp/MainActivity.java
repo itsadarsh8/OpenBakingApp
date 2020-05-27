@@ -4,6 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,10 +18,12 @@ import com.example.bakingapp.Utils.NetworkUtil;
 
 import java.util.ArrayList;
 
+import id.ionbit.ionalert.IonAlert;
+
 public class MainActivity extends AppCompatActivity {
 
-    private static final String LOG_SUBJECT="MainActivity_Error";
-    private static final String LOG_OUTPUT="MainActivity_Output";
+    private static final String LOG_SUBJECT = "MainActivity_Error";
+    private static final String LOG_OUTPUT = "MainActivity_Output";
     ArrayList<RecipePOJO> recipeArrayList;
     RecyclerView recyclerView;
     MainViewAdapter mainViewAdapter;
@@ -29,34 +34,58 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ArrayList<RecipePOJO> recipeArrayList=new ArrayList<>();
-        recyclerView=findViewById(R.id.recycler_view);
+        ArrayList<RecipePOJO> recipeArrayList = new ArrayList<>();
+        recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mainViewAdapter=new MainViewAdapter(this,recipeArrayList);
+        mainViewAdapter = new MainViewAdapter(this, recipeArrayList);
         recyclerView.setAdapter(mainViewAdapter);
 
-        mainViewAsyncTask=new IAmAsyncTask();
-        mainViewAsyncTask.execute("https://d17h27t6h515a5.cloudfront.net/topher/2017/May/59121517_baking/baking.json");
+        mainViewAsyncTask = new IAmAsyncTask();
+
+        String NETWORK_STATUS = getNetworkStatus();
+        if (NETWORK_STATUS == "COONNECTED") {
+            mainViewAsyncTask.execute("https://d17h27t6h515a5.cloudfront.net/topher/2017/May/59121517_baking/baking.json");
+        }
+        else{
+            new IonAlert(this, IonAlert.ERROR_TYPE)
+                    .setTitleText("Oops...")
+                    .setContentText("Check your network connection!")
+                    .show();
+        }
 
     }
 
-    public class IAmAsyncTask extends AsyncTask<String,Void,String > {
+    private String getNetworkStatus() {
+
+
+        ConnectivityManager CM = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo NI = CM.getActiveNetworkInfo();
+        if (NI != null && NI.isConnected()) {
+
+            return "COONNECTED";
+
+        } else {
+            return "NOT_CONNECTED";
+        }
+    }
+
+    public class IAmAsyncTask extends AsyncTask<String, Void, String> {
 
         @Override
         protected String doInBackground(String... urls) {
-            String json= NetworkUtil.fetchJsonString(urls[0]);
+            String json = NetworkUtil.fetchJsonString(urls[0]);
             return json;
         }
 
         @Override
         protected void onPostExecute(String json) {
-            ArrayList<RecipePOJO> recipeArrayList= JsonUtil.fetchFeaturesFromJson(json);
-            for(int k=0;k<recipeArrayList.size();k++){
-                for(int  m=0;m<recipeArrayList.get(k).getIngredients().size();m++){
+            ArrayList<RecipePOJO> recipeArrayList = JsonUtil.fetchFeaturesFromJson(json);
+            for (int k = 0; k < recipeArrayList.size(); k++) {
+                for (int m = 0; m < recipeArrayList.get(k).getIngredients().size(); m++) {
 
                 }
             }
-            mainViewAdapter=new MainViewAdapter(MainActivity.this,recipeArrayList);
+            mainViewAdapter = new MainViewAdapter(MainActivity.this, recipeArrayList);
             recyclerView.setAdapter(mainViewAdapter);
 
             super.onPostExecute(json);
